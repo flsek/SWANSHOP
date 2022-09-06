@@ -1,0 +1,214 @@
+@charset "UTF-8";
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@200;300;400&family=Noto+Serif+KR:wght@500&display=swap');
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Gowun Dodum', sans-serif;
+}
+
+body {
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.container {
+	max-width: 950px;
+	width: 100%;
+	padding: 40px 50px 40px 40px;
+	background: #fff;
+	margin: 0 20px;
+	border-radius: 12px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.container .topic {
+	font-size: 30px;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.content .list {
+	display: flex;
+	flex-direction: column;
+	width: 20%;
+	margin-right: 50px;
+	position: relative;
+}
+
+.content .list label {
+	height: 60px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 60px;
+	cursor: pointer;
+	padding-left: 25px;
+	transition: all 0.5s ease;
+	color: #333;
+	z-index: 12;
+}
+
+#info:checked ~ .list label.info, #modify:checked ~ .list label.modify,
+	#pass:checked ~ .list label.pass, #delete:checked ~ .list label.delete{
+	color: #fff;
+}
+
+.content .list label:hover {
+	color: #99004d;
+}
+
+.content .slider {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 60px;
+	width: 100%;
+	border-radius: 12px;
+	background: #99004d;
+	transition: all 0.4s ease;
+}
+
+#info:checked ~ .list .slider {
+	top: 0;
+}
+
+#modify:checked ~ .list .slider {
+	top: 60px;
+}
+
+#pass:checked ~ .list .slider {
+	top: 120px;
+}
+
+#delete:checked ~ .list .slider {
+	top: 180px;
+}
+
+.content .text-content2 {
+	width: 80%;
+	height: 100%;
+}
+
+.content .text {
+	display: none;
+}
+
+.content .text .title {
+	font-size: 30px;
+	margin-bottom: 30px;
+	font-weight: 500;
+}
+
+.content .text p {
+	text-align: justify;
+}
+
+.content .text-content2 .home {
+	display: block;
+}
+
+#info:checked ~ .text-content2 .info, #modify:checked ~ .text-content2 .modify,
+	#pass:checked ~ .text-content2 .pass, #delete:checked ~ .text-content2 .delete{
+	display: block;
+}
+
+#modify:checked ~ .text-content2 .info, #pass:checked ~ .text-content2 .info,
+	#delete:checked ~ .text-content2 .info{
+	display: none;
+}
+
+.content input {
+	display: none;
+}
+
+.visibility input{
+	display: inline;
+	height: 25px;
+	width: 30%;
+	outline: none;
+	border-radius: 5px;
+	padding-left: 5px;
+	border: 1px solid #ccc;
+	border-bottom-width: 2px;
+	transition: all 0.3s ease;
+}
+
+.visibility input:focus{
+	border-color: #99004d;
+}
+
+a{
+	text-decoration: none;
+}
+
+form .category {
+	display: flex;
+	margin: 5px 0;
+}
+
+form input[type="radio"] {
+	display: none;
+}
+
+form .category label {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+form .category label .dot {
+	height: 18px;
+	width: 18px;
+	border-radius: 50%;
+	margin-right: 5px;
+	background: #d9d9d9;
+	border: 5px solid transparent;
+	transition: all 0.3s ease;
+}
+
+#dot-1:checked ~ .category label .one, #dot-2:checked ~ .category label .two,
+	#dot-3:checked ~ .category label .three {
+	background: #99004d;
+	border-color: #d9d9d9;
+}
+
+#deleteBtn{
+	border: none;
+	outline: none;
+  	box-shadow: none;
+	background-color: white;
+}
+
+#modifyBtn{
+	border: none;
+	outline: none;
+  	box-shadow: none;
+	background-color: white;
+}
+
+form input[type="submit"] {
+	border: none;
+	outline: none;
+  	box-shadow: none;
+  	background-color: white;
+}
+
+form input[type="submit"]:hover {
+	color: #99004d;
+}
+
+/* 유효성 검사 문구 */
+.final_pw_ck{
+    display: none;
+}

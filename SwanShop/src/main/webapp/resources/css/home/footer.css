@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@200;300;400&family=Noto+Serif+KR:wght@500&display=swap');
+
+
+*{
+	margin: 0;
+	padding:0;
+	box-sizing: border-box;
+	font-family: 'Gowun Dodum', sans-serif;
+}
+a{
+	text-decoration: none;
+}
+/* footer 영역 */
+.footer{
+    bottom: 0;
+	width:100%;
+	background-color:#D4DFE6;
+	padding-bottom : 50px;
+}
+.footer_container{
+	width: 100%;
+	height: 100%;
+	margin: auto;
+}
+.footer_left>img {
+	width: 150%;
+    height: 130px;
+    margin-left: -20px;
+    margin-top: -12px;
+}
+.footer_left{
+	float :left;
+	width: 170px;
+	margin-left: 20px;
+	margin-top : 30px;
+	
+}
+.footer_right{
+	float :left;
+	width: 680px;
+	margin-left: 70px;
+	margin-top : 30px;
+}

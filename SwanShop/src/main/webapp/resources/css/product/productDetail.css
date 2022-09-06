@@ -1,0 +1,372 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@200;300;400&family=Noto+Serif+KR:wght@500&display=swap');
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Gowun Dodum', sans-serif;
+}
+
+img {
+	width: 100%;
+	display: block;
+}
+
+.main-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.container {
+	padding: 0 1rem;
+	margin: 0 auto;
+}
+
+.product-div {
+	margin: 1rem 0;
+	padding: 2rem 0;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	background-color: #fff;
+	border-radius: 3px;
+	column-gap: 10px;
+}
+
+.product-div-left {
+	padding: 20px;
+}
+
+.product-div-right {
+	padding: 20px;
+}
+
+.img-container img {
+	width: 200px;
+	margin: 0 auto;
+}
+
+.hover-container {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	margin-top: 32px;
+}
+
+.hover-container div {
+	border: 2px solid rgba(252, 160, 175, 0.7);
+	padding: 1rem;
+	border-radius: 3px;
+	margin: 0 4px 8px 4px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.active {
+	border-color: rgb(255, 145, 163) !important;
+}
+
+.hover-container div:hover {
+	border-color: rgb(255, 145, 163);
+}
+
+.hover-container div img {
+	width: 50px;
+	cursor: pointer;
+}
+
+.product-div-right span {
+	display: block;
+}
+
+.product-name {
+	font-size: 26px;
+	margin-bottom: 22px;
+	font-weight: 700;
+	letter-spacing: 1px;
+	opacity: 0.9;
+}
+
+.product-price {
+	font-weight: 700;
+	font-size: 24px;
+	opacity: 0.9;
+	font-weight: 500;
+}
+
+.product-rating {
+	display: flex;
+	align-items: center;
+	margin-top: 12px;
+}
+
+.product-rating span {
+	margin-right: 6px;
+}
+
+.product-description {
+	font-weight: 18px;
+	line-height: 1.6;
+	font-weight: 300;
+	opacity: 0.9;
+	margin-top: 22px;
+}
+
+.btn-groups {
+	margin-top: 22px;
+}
+
+.btn-groups button {
+	display: inline-block;
+	font-size: 16px;
+	font-family: inherit;
+	text-transform: uppercase;
+	padding: 15px 16px;
+	color: #fff;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.btn-groups button .fas {
+	margin-right: 8px;
+}
+
+.add-cart-btn {
+	background-color: #99004d;
+	border: 2px solid #99004d;
+	margin-right: 8px;
+}
+
+.add-cart-btn:hover {
+	background-color: #fff;
+	color: #99004d;
+}
+
+.buy-now-btn {
+	background-color: #000;
+	border: 2px solid #000;
+}
+
+.buy-now-btn:hover {
+	background-color: #fff;
+	color: #000;
+}
+
+@media screen and (max-width: 992px){
+    .product-div{
+        grid-template-columns: 100%;
+    }
+    .product-div-right{
+        text-align: center;
+    }
+    .product-rating{
+        justify-content: center;
+    }
+    .product-description{
+        max-width: 400px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+@media screen and (max-width: 400px){
+    .btn-groups button{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+ /* 리뷰쓰기 버튼 */
+  .reply_button_wrap{
+  	padding : 10px;
+  	border-top: solid 3px rebeccapurple;
+  	
+  }
+  .reply_button_wrap button{
+    background-color: #99004d;
+	border: 2px solid #99004d;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 5px 12px;
+    cursor: pointer;  
+    color:#fff;
+    float: right;
+    margin-bottom: 5px;
+  }
+  .reply_button_wrap button:hover{
+  	background-color: #fff;
+	color: #99004d;
+  }
+  
+  /* 리뷰 영역 */
+  	.content_bottom{
+  		width: 80%;
+  		margin : auto;
+  	}
+	.reply_content_ul{
+		width:80%;
+		list-style: none;
+	}
+	.comment_wrap{
+		position: relative;
+    	border-bottom: 1px dotted #d4d4d4;
+    	padding: 14px 0 10px 0;	
+    	font-size: 12px;
+	}
+		/* 리뷰 머리 부분 */
+		.reply_top{
+			padding-bottom: 10px;
+		}
+		.id_span{
+			padding: 0 15px 0 3px;
+		    font-weight: bold;		
+		}
+		.date_span{
+			padding: 0 15px 0;
+		}
+		/* 리뷰 컨텐트 부분 */
+		.reply_bottom{
+			padding-bottom: 10px;
+		}
+		
+	
+	/* 리뷰 선 */
+	.reply_line{
+		width : 80%;
+		margin : auto;
+		border-top:1px solid #c6c6cf;  	
+	}
+	
+	/* 리뷰 제목 */
+	.reply_subject h2{
+		padding: 15px 0 5px 5px;
+	}
+	
+	/* pageMaker */
+	.repy_pageInfo_div{
+		text-align: center;
+	    margin-top: 30px;
+	    margin-bottom: 40px;	
+	}
+	.pageMaker{
+	    list-style: none;
+	    display: inline-block;	
+	}
+	.pageMaker_btn{
+		float: left;
+	    width: 25px;
+	    height: 25px;
+	    line-height: 25px;
+	    margin-left: 20px;
+	    font-size: 10px;
+	    cursor: pointer;
+	}
+	.active{
+		border : 2px solid black;
+		font-weight:400;	
+	}
+	.next, .prev {
+	    border: 1px solid #ccc;
+	    padding: 0 10px;
+	}	
+  
+  /* 리뷰 없는 경우 div */
+  .reply_not_div{
+  	text-align: center;
+  }
+  .reply_not_div span{
+	display: block;
+    margin-top: 30px;
+    margin-bottom: 20px; 
+  }
+  
+  /* 리뷰 수정 삭제 버튼 */
+  .update_reply_btn{
+ 	font-weight: bold;
+    background-color: #b7b399;
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    margin: 0 5px 0 30px;
+    border-radius: 6px;
+    color: white; 
+    cursor: pointer;
+  }
+  .delete_reply_btn{
+ 	font-weight: bold;
+    background-color: #e7578f;
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 6px;
+    color: white; 
+  	cursor: pointer;
+  }
+.quantity_btn {
+	position: absolute;
+	border: 1px solid #aaa;
+	color: #99004d;
+	width: 14px;
+	height: 13px;
+	padding: 0px;
+	background-color: #fff;
+	font-weight: bold;
+	font-size: 7px;
+	line-height: 6px;
+	vertical-align: middle;
+}
+
+icons a{
+  background: #ecf0f3;
+  position: relative;
+  height: 60px;
+  width: 60px;
+  margin: 0 10px;
+  display: inline-flex;
+  text-decoration: none;
+  border-radius: 50%;
+  transition: all 0.3s;
+  box-shadow: -3px -3px 7px #ffffff,
+              3px 3px 5px #ceced1;
+}
+.icons a:hover:before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 50%;
+  background: #ecf0f3;
+  box-shadow: inset -3px -3px 7px #ffffff,
+              inset 3px 3px 5px #ceced1;
+}
+.icons a i{
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  font-size: 25px;
+  line-height: 60px;
+}
+.icons a:hover i{
+  transform: scale(0.9);
+}
+
+.subline {
+ height:1px;
+ margin:auto;
+ background-color: gray;
+ }
+ .subbox {
+ padding: 10px;
+ padding-top: 20px;
+ color: darkgray;
+ }

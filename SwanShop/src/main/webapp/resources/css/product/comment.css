@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+.comment-post-section {
+	border: solid 2px rebeccapurple;
+	width: 800px;
+	height: 60%;
+	margin: auto;
+	margin-top: 25px;
+}
+
+.new-post-title {
+	color: lightgray;
+	margin: 20px;
+	font-weight: bold;
+}
+
+.post-p {
+	width: 50px;
+	position: absolute;
+	margin-top: 50px;
+	margin-left: 15px;
+	text-align: center;
+	color: darkgray;
+}
+
+.post-forms {
+	width: 120px;
+}
+
+.post-contents {
+	padding-top: 5px;
+}
+
+#id_author {
+	width: 420px;
+	margin-left: 70px;
+	margin-top: 50px;
+}
+
+#id_text {
+	width: 420px;
+	margin-left: 70px;
+}
+
+.save-button {
+	width: 150px;
+	height: 40px;
+	background-color: rgba(171, 141, 181, 0.6);
+	border: solid 0.1px darkgray;
+	margin-left: 25px;
+	margin-top: 25px;
+}

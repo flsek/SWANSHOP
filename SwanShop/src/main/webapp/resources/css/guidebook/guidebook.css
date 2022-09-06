@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@200;300;400&family=Noto+Serif+KR:wght@500&display=swap');
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Gowun Dodum', sans-serif;
+}
+
+main{
+	margin-top:10%;
+	width: 90%;
+}
+
+.gidebook-section {
+	padding: 40px 50px 40px 40px;
+	background: #fff;
+	margin: 0 30px;
+	border-radius: 12px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.gidebook-main-title {
+	font-size: 30px;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.gidebook-title-ment {
+	margin-top: 25px;
+	margin-left: 15px;
+	margin-bottom: 50px;
+}
+
+.gidebook-title {
+	color: purple;
+	font-size: 24px;
+	width: 1130px;
+	margin-top: 35px;
+}
+
+.gidebook-content {
+	background-color: rgba(171, 141, 181, 0.2);
+	margin-top: 15px;
+	line-height: 30px;
+	font-size: 20px;
+	padding: 10px;
+}
+
+.show {
+	display: block;
+}
+
+.menu p {
+	cursor: pointer;
+}
+
+.menu .hide {
+	display: none;
+}

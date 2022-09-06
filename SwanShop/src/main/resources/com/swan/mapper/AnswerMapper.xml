@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swan.mapper.AnswerMapper">
+	<!-- 답변 등록 -->
+  	<insert id="enrollAnswer">
+  		insert into answer values(seq_aid.nextval, #{q_id}, #{member_id}, #{content}, sysdate, sysdate)
+  	</insert>
+  	
+  	<!-- 답변 수정 -->
+  	<update id="updateAnswer">
+  		update answer set content = #{content}
+  		where a_id = #{a_id}
+  	</update>
+  	
+  	<!-- 답변 한 개 정보(수정 페이지) -->
+  	<select id="getUpdateAnswer" resultType="com.swan.model.AnswerDTO">
+		select * from answer
+		where a_id = #{a_id}
+	</select>
+	
+	<!-- 답변 삭제 -->
+  	<delete id="deleteAnswer">
+  		DELETE FROM answer
+  		WHERE a_id = #{a_id}
+  	</delete>
+  	
+  	<!-- 답변 페이징 -->
+  	<select id="getAnswerList" resultType="com.swan.model.AnswerDTO">
+  	
+  		<![CDATA[
+		select * from(  		
+			select rownum as rn, a_id, q_id, member_id, content, a_create_date, a_modify_date
+			from answer
+			where rownum <= #{pageNum} * #{amount}  and q_id = #{q_id}	
+			order by a_create_date desc  	
+  			)
+  		where rn > (#{pageNum} -1) * #{amount}
+  		]]>	
+  	</select>
+  	
+  	<!-- 리뷰 총 개수(페이징) -->
+  	<select id="getAnswerTotal" resultType="_int">
+  		select count(*)
+  		from answer
+  		where q_id = #{q_id}
+  	</select>
+  	
+</mapper>

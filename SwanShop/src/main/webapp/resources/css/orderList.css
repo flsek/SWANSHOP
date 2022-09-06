@@ -1,0 +1,149 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=IBM+Plex+Sans+KR:wght@200;300;400&family=Noto+Serif+KR:wght@500&display=swap');
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Gowun Dodum', sans-serif;
+}
+
+a{
+	text-decoration: none;
+}
+a:link {color: black;}
+a:visited {color: black;}
+a:active {color: black;}
+a:hover {color: black;}
+ul{
+    list-style: none;
+}
+
+	/* 주문 목록 영역 */
+.order_table_wrap{
+	padding: 20px 35px;
+	min-height: 570px;
+}
+.order_table{
+	margin-top:15%;
+	margin: auto;
+    width: 100%;
+    border: 1px solid #99004d;
+    text-align: center;
+    border-collapse: collapse;
+}
+.order_table td{
+	padding: 10px 5px;
+	border : 1px solid #e7e7e7;
+}
+.order_table thead{
+	text-align: center;
+	color: #333;
+	border-bottom: 1px solid #e7e7e7;
+	border-top: 1px solid #99004d;
+	background: #f7f5f6;
+	padding: 2px 0;
+	font-weight: 700;
+}
+
+.delete_btn{
+    border: none;
+    color: white;
+    padding: 5px 15px;
+    cursor: pointer;
+    background-color: #f7564b;	
+}
+.delete_btn:hover{
+	background-color : #da190b;
+}
+
+.table_empty{
+	height: 50px;
+    text-align: center;
+    margin: 200px 0 215px 0px;
+    font-size: 25px;
+}
+
+	/* 검색 영역 */
+.search_btn.icon {
+	position: absolute;
+	right: -2px;
+	top: 0;
+	width: 50px;
+	background: #FFF;
+	height: 100%;
+	text-align: center;
+	line-height: 50px;
+	color: #99004d;
+	font-size: 20px;
+	border-radius: 25px;
+}
+
+.search_wrap{
+	margin-top:15px;
+}
+.search_input{
+    position: relative;
+    text-align:center;	
+}
+.search_input input[name='keyword']{
+	padding: 1%;
+    font-size: 15px;
+    height: 20px;
+    line-height: 20px;
+}
+
+	/* 페이지 버튼 인터페이스 */
+.pageMaker_wrap{
+	text-align: center;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+.pageMaker{
+    list-style: none;
+    display: inline-block;
+}	
+.pageMaker_btn {
+    float: left;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    margin-left: 20px;
+}
+.active{
+	border : 2px solid #99004d;
+	font-weight:400;
+}
+.next, .prev {
+    border: 1px solid #ccc;
+    padding: 0 10px;
+}
+.next a, .prev a {
+    color: #ccc;
+}
+
+/* float 속성 해제 */
+.clearfix{
+	clear: both;
+}
+
+.delete_btn{
+    border: none;
+    color: white;
+    padding: 5px 15px;
+    cursor: pointer;
+    background-color: #f7564b;	
+}
+.delete_btn:hover{
+	background-color : #da190b;
+}
+.update_btn{
+    border: none;
+    color: white;
+    padding: 5px 15px;
+    cursor: pointer;
+    background-color: #e7e7e7;	
+}
+.update_btn:hover{
+	background-color : #555555;
+}

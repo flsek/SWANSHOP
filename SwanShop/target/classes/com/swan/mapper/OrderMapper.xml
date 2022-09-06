@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swan.mapper.OrderMapper">
+
+	<!-- 주문 상품 정보(주문 페이지) -->
+	<select id="getProductsInfo"
+		resultType="com.swan.model.OrderPageItemDTO">
+		select product_id, product_title, product_price
+		from product
+		where product_id = #{product_id}
+	</select>
+
+	<!-- 주문 상품 정보(주문 처리) -->
+	<select id="getOrderInfo"
+		resultType="com.swan.model.OrderItemDTO">
+		select product_id, product_price
+		from product where
+		product_id = #{product_id}
+	</select>
+
+	<!-- 주문 테이블 등록 -->
+	<insert id="enrollOrder">
+		insert into orders
+		values(#{order_id}, #{addressee}, #{member_id}, #{address2}, #{address2}, '배송 준비',
+		#{deliverycost}, sysdate)
+	</insert>
+
+	<!-- 주문 아이템 테이블 등록 -->
+	<insert id="enrollOrderItem">
+		insert into order_item
+		values(#{order_id},
+		#{product_id}, #{product_count}, #{product_price})
+	</insert>
+
+	<!-- 주문 재고 차감 -->
+	<update id="deductStock">
+		update product set product_stock = #{product_stock}
+		where product_id = #{product_id}
+	</update>
+
+	<!-- 주문취소 -->
+	<update id="orderCancle">
+		update orders set order_state = '주문 취소' where
+		order_id = #{order_id}
+	</update>
+
+	<!-- 주문 상품 정보(주문취소) -->
+	<select id="getOrderItemInfo"
+		resultType="com.swan.model.OrderItemDTO">
+		select * from order_item
+		where order_id = #{order_id}
+	</select>
+
+	<!-- 주문 정보(주문 취소) -->
+	<select id="getOrder" resultType="com.swan.model.OrderDTO">
+		select * from orders
+		where
+		order_id = #{order_id}
+	</select>
+
+	<!-- 특정 유저의 주문 목록 -->
+	<select id="orderList" resultType="com.swan.model.OrderDTO">
+		select * from orders
+		where
+		member_id = #{member_id}
+		order by ORDER_DATE desc
+	</select>
+
+	<!-- 특정 주문 목록 -->
+	<select id="orderView" resultType="com.swan.model.OrderListVO">
+		select o.order_id,
+		o.addressee, o.member_id, o.address, o.address2, o.deliverycost,
+		o.order_date,
+		i.order_id, i.product_id, i.product_count, i.product_price,
+		p.product_id, p.product_title
+		from orders o
+		inner join order_item i on o.order_id = i.order_id
+		inner join product p on i.product_id = p.product_id
+		where o.member_id = #{member_id}
+		and o.order_id = #{order_id}
+	</select>
+</mapper>

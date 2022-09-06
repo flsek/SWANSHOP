@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swan.mapper.ReplyMapper">
+	<!-- 리뷰 등록 -->
+  	<insert id="enrollReply">
+  		insert into reply values(seq_rid.nextval, #{product_id}, #{member_id}, sysdate, #{content}, #{rating})
+  	</insert>
+  	
+  	<!-- 리뷰 존재 체크 -->
+  	<select id="checkReply" resultType="Integer">
+		select reply_id from reply 
+		where member_id = #{member_id} and product_id = #{product_id}
+	</select>
+	
+	<!-- 리뷰 페이징 -->
+  	<select id="getReplyList" resultType="com.swan.model.ReplyDTO">
+  	
+  		<![CDATA[
+		select * from(  		
+			select rownum as rn, reply_id, product_id, member_id, content, rating, regdate
+			from reply
+			where rownum <= #{pageNum} * #{amount}  and product_id = #{product_id}	
+			order by regdate desc  	
+  			)
+  		where rn > (#{pageNum} -1) * #{amount}
+  		]]>	
+  	</select>
+  	
+  	<!-- 리뷰 총 개수(페이징) -->
+  	<select id="getReplyTotal" resultType="_int">
+  		select count(*)
+  		from reply
+  		where product_id = #{product_id}
+  	</select>
+  	
+  	<!-- 리뷰 수정 -->
+  	<update id="updateReply">
+  		update reply set content = #{content}, rating = #{rating}
+  		where reply_id = #{reply_id}
+  	</update>
+  	
+  	<!-- 리뷰 한 개 정보(수정 페이지) -->
+  	<select id="getUpdateReply" resultType="com.swan.model.ReplyDTO">
+		select * from reply
+		where reply_id = #{reply_id}
+	</select>
+	
+	<!-- 리뷰 삭제 -->
+  	<delete id="deleteReply">
+  		DELETE FROM reply
+  		WHERE reply_id = #{reply_id}
+  	</delete>
+  	
+  	<!-- 평점 평균 구하기 -->
+  	<select id="getRatingAverage" resultType="double">
+  		select avg(rating)
+  		from reply
+  		where product_id = #{product_id}
+  	</select>
+  	<!-- 평점 평균 반영하기 -->
+  	<update id="updateRating">
+		update product
+		set ratingavg = #{ratingavg}
+		where product_id = #{product_id}
+	</update>
+</mapper>

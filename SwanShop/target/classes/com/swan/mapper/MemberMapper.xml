@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swan.mapper.MemberMapper">
+	
+	<!-- 로그인 -->
+	<select id="login" resultType="com.swan.model.MemberVO">
+		select *
+		from member
+		<!-- where MEMBER_ID=#{id} and MEMBER_PW=#{pwd} and member_status='Y' -->
+		where id=#{id} and member_status='Y'
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="insertMember">
+		insert into member
+		values(#{id}, #{pwd}, #{name}, #{phone}, #{email}, #{gender}, #{address}, #{address2}, sysdate, default, default)
+	</insert>
+	
+	<!-- 아이디 중복검사 -->
+  	<select id="idCheck" resultType="_int">
+  		select count(*) from member where id = #{id}
+  	</select>
+  	
+  	<!-- 주문자 정보 -->
+  	<select id="getMemberInfo" resultType="com.swan.model.MemberVO">
+  	
+  		SELECT id, name, phone, email, address, address2
+  		FROM member 
+  		WHERE id = #{id}
+  	
+  	</select>
+  	
+  	<!-- 내 정보 수정 -->
+  	<update id="updateMember">
+  		update member
+		set name=#{name}, phone=#{phone}, email=#{email}, gender=#{gender}, address=#{address}, address2=#{address2}
+		where id=#{id}
+  	</update>
+  	
+  	<!-- 비밀번호 수정 -->
+  	<update id="updatePwd">
+		update member
+		set pwd=#{newPwd}
+		where id=#{id}
+	</update>
+	
+  	<!-- 회원 탈퇴 -->
+  	<update id="deleteMember">
+		update member
+		set member_status = 'N'
+		where id = #{id}
+	</update>
+	
+	<!-- 아이디 찾기 -->
+	<select id="getId" parameterType="String" resultType="String">
+		select id from member
+		where email = #{email} and member_status='Y'
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+  	<update id="findUpdatePwd">
+		update member
+		set pwd=#{pwd}
+		where id=#{id}
+	</update>
+	
+	
+	<!-- 관리자 회원 복구 -->
+	<update id="updateMemberAdmin">
+		update member
+		set member_status = 'Y'
+		where id = #{id}
+	</update>
+	
+	<!-- 관리자 회원 탈퇴 -->
+	<update id="deleteMemberAdmin">
+		update member
+		set member_status = 'N'
+		where id = #{id}
+	</update>
+	
+</mapper>

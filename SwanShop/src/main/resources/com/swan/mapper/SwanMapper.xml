@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swan.mapper.SwanMapper">
+	
+	<!-- criteria(검색 조건 = 상품 명, 카테고리) -->
+	<!-- criteria(검색조건) -->
+	<sql id="criteria">
+		<!--  각 쿼리문에 각각 AND가 추가되도록 해주었는데, where의 첫 조건 문에는 AND가 없어야 함.
+		 따라서 최상위의 <trim> 태그에 prefixOverrides 속성을 추가해서 제일 앞의 조건문에는 AND를 제거 -->
+	  	<trim prefix="(" suffix=") AND" prefixOverrides="AND">
+	  		<foreach item="type" collection="typeArr">
+	  			<trim prefix="AND">
+	  				<choose>
+	  					<when test="type == 'C'.toString()">
+	  						kind_id like '%' || #{kind_id} || '%'
+	  					</when>  					
+	  					<when test="type == 'T'.toString()">
+	  						product_title like '%' || #{keyword} || '%'
+	  					</when>  					
+	  				</choose>
+	  			</trim>
+	  		</foreach>
+	  	</trim>
+
+	</sql>
+	
+	<!-- 상품 리스트 -->
+	<select id="productsGetList" resultType="com.swan.model.SwanVO">
+	  	<![CDATA[
+		select * from(
+		    select /*+INDEX_DESC(product seq_pid)*/ rownum as rn,  product_id, product_title, product_content,
+		        product_stock, (select kind_name from swan_cate where product.kind_id = swan_cate.kind_id) kind_name,
+		        product_create_date, product_price, product_status, ratingavg
+		    from product 
+		    where 
+		]]>
+
+		<include refid="criteria"></include>
+		     
+		<![CDATA[    
+		    rownum <= #{pageNum} * #{amount} 
+		    )
+		where rn > (#{pageNum} -1) * #{amount}		  	
+  		]]>
+	</select>
+
+	<!-- 생리대 카테고리 리스트 -->
+	<select id="getCateCode1" resultType="com.swan.model.CateVO">
+	
+		<![CDATA[
+			select * from swan_cate where kind_id > 100000 and kind_id < 200000
+		]]>
+	</select>
+	
+	<!-- 월경컵 카테고리 리스트 -->
+	<select id="getCateCode2" resultType="com.swan.model.CateVO">
+	
+		<![CDATA[
+			select * from swan_cate where kind_id > 200000 and kind_id < 300000
+		]]>
+	
+	</select>
+
+	<!-- Y존 케어 카테고리 리스트 -->
+	<select id="getCateCode3" resultType="com.swan.model.CateVO">
+	
+		<![CDATA[
+			select * from swan_cate where kind_id > 300000 and kind_id < 400000
+		]]>
+	
+	</select>
+
+	<!-- 콘돔 카테고리 리스트 -->
+	<select id="getCateCode4" resultType="com.swan.model.CateVO">
+	
+		<![CDATA[
+			select * from swan_cate where kind_id > 400000 and kind_id < 500000
+		]]>
+	
+	</select>
+	
+	<!-- 검색 대상 카테고리 리스트 -->
+	<select id="getCateList" resultType="String">
+	
+		select DISTINCT kind_id from product where 
+		<foreach item="type" collection="typeArr">		
+  				<choose>
+  					<when test="type == 'T'.toString()">
+  						product_title like '%' || #{keyword} || '%'
+  					</when>  					
+  				</choose>
+  		</foreach>
+	
+	</select>
+	
+	<!-- '검색 조건( C or T)'과 '카테고리 코드번호' 두 조건을 충족하는 카테고리 정보가 출력되도록 작성 -->
+	<!-- 카테고리 정보(+ 검색 대상 개수) -->	
+	
+	<select id="getCateInfo" resultType="com.swan.model.CateFilterDTO">
+	
+	<!-- '개수'데이터를 얻기 위해서 "COUNT()"함수를 사용
+		!! 주의 : 별칭을 반드시 줘야 함 !!
+	 -->
+		select DISTINCT count(*) cateCount, a.kind_id, b.kind_name from product a left join swan_cate b on a.kind_id = b.kind_id
+		
+		where 
+
+		<foreach item="type" collection="typeArr">		
+  				<choose>
+  					<when test="type == 'T'.toString()">
+  						product_title like '%' || #{keyword} || '%' and a.kind_id = #{kind_id}
+  					</when>				
+  				</choose>
+  		</foreach>
+  		group by a.kind_id, b.kind_name
+	
+	</select>
+
+	<!-- 상품 총 개수 -->
+	<select id="productsGetTotal" resultType="_int">
+		select count(*) from product
+		where
+		<include refid="criteria"></include> 
+		product_id > 0
+	</select>
+
+	<!-- 상품 정보 -->
+	<select id="getGoodsInfo" resultType="com.swan.model.SwanVO">
+		select a.product_id, a.product_title, a.product_content, a.product_price, a.product_stock, a.product_count, a.kind_id, a.product_create_date,
+		a.product_modify_date, a.product_status, a.ratingavg
+		from product a left outer join swan_cate c on a.kind_id = c.kind_id
+		where product_id = #{product_id}
+	</select>
+	
+	<!-- 상품 id, 이름 -->
+	<select id="getProductIdName" resultType="com.swan.model.SwanVO">
+		select product_id, product_title from product 
+		where product_id = #{product_id}
+	</select>
+	
+	<!-- 평점 순 상품 정보 -->
+	<!-- 평점 기준으로 역순으로 배열된 테이블을 만들어내고 이 테이블에서 8개의 행만 가져오도록 아래와 같이 명령문을 작성 -->
+	<select id="likeSelect" resultType="com.swan.model.SelectDTO">
+		select * 
+		from
+		(select rownum as rn, product_id, product_title, ratingavg, (select kind_name from swan_cate where product.kind_id = swan_cate.kind_id) as kind_name
+		from product
+		order by ratingavg desc)
+		<![CDATA[
+		where rn < 9
+		]]>	
+	</select>
+
+</mapper>

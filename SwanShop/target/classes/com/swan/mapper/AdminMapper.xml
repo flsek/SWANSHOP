@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swan.mapper.AdminMapper">
+	
+	<!-- <selectkey>: 자동생성키 컬럼(auto increment(MySql), IDENTITY(Oracle))을 지원하지 않는 데이터베이스에 자동생성키 기능과 비슷한 효과를 구현하기 위해서 사용 -->
+	<!-- 상품 등록 -->
+	<insert id="swanEnroll">
+	
+		<!-- order 속성값 AFTER로 인해서 본 쿼리문(INSERT)이 실행이 된 뒤에 <selectkey> 태그 내의 쿼리문이 실행이 되며, 
+		product테이블의 'product_id'값 중 가장 큰 값을 SwanVO에 있는 product_id 변수에 반환시킨다 -->
+		<selectKey resultType="_int" keyProperty="product_id" order="AFTER">
+  			SELECT MAX(product_id) from product
+  		</selectKey>
+		insert into product
+		values(seq_pid.nextval, #{product_title}, #{product_content}, #{product_price}, #{product_stock},
+		default, #{kind_id}, sysdate, sysdate, default, default)
+	</insert>
+
+	<!-- 카테고리 리스트 -->
+	<select id="cateList" resultType="com.swan.model.CateVO">
+		select * from swan_cate order by
+		kind_name
+	</select>
+
+	<!-- 상품 리스트 -->
+	<select id="productsGetList" resultType="com.swan.model.SwanVO">
+	  	<![CDATA[
+		select * from(
+		    select /*+INDEX_DESC(product seq_pid)*/ rownum as rn,  product_id, product_title,
+		        product_stock, product_price, (select kind_name from swan_cate where product.kind_id = swan_cate.kind_id)kind_name, kind_id, product_create_date, product_status
+		    from product 
+		    where 
+		]]>
+
+		<if test="keyword != null">
+			product_title like '%' || #{keyword} || '%' and
+		</if>
+		     
+		<![CDATA[    
+		    rownum <= #{pageNum} * #{amount} 
+		    order by product_id desc
+		    )
+		where rn > (#{pageNum} -1) * #{amount}		  	
+	  		order by product_id 
+  		]]>
+	</select>
+
+	<!-- 상품 총 개수 -->
+	<select id="productsGetTotal" resultType="_int">
+		select count(*) from product
+		<if test="keyword != null">
+			where product_title like '%' || #{keyword} || '%'
+		</if>
+	</select>
+
+	<!-- 상품 조회 페이지 -->
+	<select id="productsGetDetail"
+		resultType="com.swan.model.SwanVO">
+		select product_id, product_title, product_content, product_price, product_stock, product_count, kind_id, product_create_date,
+		product_modify_date, product_status
+		from product where product_id = #{product_id}
+	</select>
+	
+	<!-- 상품 정보 수정 -->
+	<update id="productsModify">
+		update product set product_title = #{product_title}, product_content = #{product_content}, product_price = #{product_price}, product_stock = #{product_stock}, kind_id = #{kind_id},
+		product_modify_date = sysdate
+		where product_id = #{product_id}
+	</update>
+	
+	<!-- 상품 정보 삭제 -->
+	<delete id="productsDelete">
+		delete from product where product_id = #{product_id}
+	</delete>
+	
+	<!-- 이미지 등록 -->
+	<insert id="imageEnroll">
+		insert into image(product_id, fileName, uploadPath, uuid) values (#{product_id}, #{fileName}, #{uploadPath}, #{uuid})
+	</insert>
+	
+	<!-- 지정 상품 이미지 전체 삭제 --> 
+	<delete id="deleteImageAll">
+		delete FROM image where product_id = #{product_id}
+	</delete>
+	
+	<!-- 어제자 날자 이미지 리스트 -->
+	<select id="checkFileList" resultType="com.swan.model.AttachImageVO">
+		select * from image where uploadpath = to_char(sysdate -1, 'yyyy\mm\dd')	
+	</select>
+	
+	<!-- 지정 상품 이미지 정보 얻기 -->
+	<select id="getAttachInfo" resultType="com.swan.model.AttachImageVO">
+		select * from image where product_id = #{product_id}
+	</select>
+	
+	<!-- 주문 리스트 -->
+	<select id="getOrderList" resultType="com.swan.model.OrderDTO">
+		<![CDATA[
+		select * 
+		from(
+		    select rownum rn, order_id, member_id, order_state, order_date
+		    from orders
+		    where rownum <= #{pageNum} * #{amount} 
+		]]>    
+		<if test="keyword != null">
+			and member_id like '%'||#{keyword}||'%'
+		</if>
+		<![CDATA[
+		    
+		    order by order_date desc
+		    )
+		where rn > (#{pageNum} -1) * #{amount}
+		]]>
+	</select>	
+	
+	<!-- 상품 총 개수 -->
+	<select id="getOrderTotal" resultType="_int">
+	
+		select count(*) from orders
+		
+	    <if test="keyword != null">
+	    	where member_id like '%'||#{keyword}||'%'
+	    </if>
+	</select>
+	
+	<!-- 문의사항 리스트 -->
+	<select id="getQuestionList" resultType="com.swan.model.QuestionVO">
+		<![CDATA[
+		select * 
+		from(
+		    select rownum rn, q_id, q_writer, q_title, q_create_date
+		    from question
+		    where rownum <= #{pageNum} * #{amount} 
+		]]>    
+		<if test="keyword != null">
+			and q_title like '%'||#{keyword}||'%'
+		</if>
+		<![CDATA[
+		    
+		    order by q_create_date desc
+		    )
+		where rn > (#{pageNum} -1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 문의사항 총 개수 -->
+	<select id="getQuestionTotal" resultType="_int">
+	
+		select count(*) from question
+		
+	    <if test="keyword != null">
+	    	where q_title like '%'||#{keyword}||'%'
+	    </if>
+	</select>
+	
+	<!-- 회원 리스트 -->
+	<select id="getMemberList" resultType="com.swan.model.MemberVO">
+		<![CDATA[
+		select * 
+		from(
+		    select rownum rn, id, name, phone, email, joindate, member_status
+		    from member
+		    where rownum <= #{pageNum} * #{amount} 
+		]]>    
+		<if test="keyword != null">
+			and id like '%'||#{keyword}||'%'
+		</if>
+		<![CDATA[
+		    
+		    order by joindate
+		    )
+		where rn > (#{pageNum} -1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 총 회원 수 -->
+	<select id="getMemberTotal" resultType="_int">
+	
+		select count(*) from member
+		
+	    <if test="keyword != null">
+	    	where id like '%'||#{keyword}||'%'
+	    </if>
+	</select>
+</mapper>
