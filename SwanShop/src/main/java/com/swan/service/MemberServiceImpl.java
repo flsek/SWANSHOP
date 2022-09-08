@@ -161,8 +161,8 @@ public class MemberServiceImpl implements MemberService {
 		// Mail Server 설정
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.naver.com";
-		String hostSMTPid = "muchpretty99@naver.com";
-		String hostSMTPpwd = "flsek1306";
+		String hostSMTPid = "본인 이메일";
+		String hostSMTPpwd = "본인 이메일 비밀번호";
 
 		// 보내는 사람 EMail, 제목, 내용
 		String fromEmail = "muchpretty99@naver.com";
