@@ -93,7 +93,7 @@ public class AdminServiceImpl implements AdminService {
 			// 해당 상품의 이미지 정보가 모두 삭제되도록 deleteImageAll() 메서드를 호출
 			adminMapper.deleteImageAll(vo.getProduct_id());
 			
-			// List 자료 형태로 전달받은 이미지 정보(BookVO의 imageList)를 각 요소 순서대로 이미지 정보를 DB에 저장
+			// List 자료 형태로 전달받은 이미지 정보(SwanVO의 imageList)를 각 요소 순서대로 이미지 정보를 DB에 저장
 			vo.getImageList().forEach(attach -> {
 				
 				// SwanVO에 있는 imageList의 각 요소로 있는 AttachImageVO 객체에 있는 product_id 변수에는 값이 할당이 되지 않았기 때문에, 해당 값을 세팅해주는 코드를 작성
