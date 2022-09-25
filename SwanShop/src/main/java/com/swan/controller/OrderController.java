@@ -47,8 +47,8 @@ public class OrderController {
 	public static final String IMPORT_CANCEL_URL = "https://api.iamport.kr/payments/cancel";
 	public static final String IMPORT_PREPARE_URL = "https://api.iamport.kr/payments/prepare";
 
-	public static final String KEY = "0394145266790580";
-	public static final String SECRET = "oM7x86wOA2kPQ8KLRWzfiaL2ecnVFZs4MzBUG8Iha371cRM4Omj6w59LiwHYw92iJEcpMVGXZOZbFLft";
+	public static final String KEY = "";
+	public static final String SECRET = "";
 
 	@Autowired
 	private OrderService orderService;
