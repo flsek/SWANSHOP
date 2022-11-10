@@ -33,13 +33,13 @@
 				<div class="phone details">
 					<i class="fas fa-phone-alt"></i>
 					<div class="topic">전화번호</div>
-					<div class="text-one">010-9438-1306</div>
+					<div class="text-one">010-1234-5678</div>
 				</div>
 				<div class="email details">
 					<i class="fas fa-envelope"></i>
 					<div class="topic">이메일</div>
-					<div class="text-one">muchpretty99@gmail.com</div>
-					<div class="text-two">muchpretty99@naver.com</div>
+					<div class="text-one">이메일@naver.com</div>
+					<div class="text-two">이메일@naver.com</div>
 				</div>
 			</div>
 			<div class="right-side">
